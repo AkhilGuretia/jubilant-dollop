@@ -1,0 +1,28 @@
+.btn {
+  padding: 8px 12px;
+  border-radius: 3px;
+  border: 0;
+}
+
+.btn-success {
+  background-color: green;
+  color: white;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: grey;
+  color: white;
+}
+.btn-Danger {
+  background-color: red;
+  color: white;
+}
+.btn-warning {
+  background-color: orange;
+  color: white;
+}
