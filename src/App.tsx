@@ -6,6 +6,8 @@ import { useState } from "react";
 import Cart from "./Components/Cart";
 import NavBar from "./Components/NavBar";
 import ExpandableText from "./Components/ExpandableText";
+import Form from "./Components/Form";
+import "./index.css";
 function App() {
   let items = [
     "Mumbai",
@@ -21,7 +23,9 @@ function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
   return (
     <div>
-      <>
+      <Form></Form>
+      <p></p>
+      <div>
         {alertVisible && (
           <Alert onClose={() => setAlertVisibility(false)}>
             <strong>Holy guacamole!</strong> You should check in on some of
@@ -35,7 +39,7 @@ function App() {
         >
           My Button
         </button>
-      </>
+      </div>
       <ListGroup
         items={items}
         heading="Cities"
