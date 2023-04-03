@@ -1,20 +1,28 @@
 import { FieldValues, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface formData {
-  name: string;
-  age: number;
-}
+const schema = z.object({
+  name: z
+    .string()
+    .min(4, { message: "Name must be atleast 4 character(s) long" }),
+  age: z
+    .number({ invalid_type_error: "Age is required" })
+    .min(18, { message: "You must be atleast 18 Years old" }),
+});
+
+type formData = z.infer<typeof schema>;
 
 const Form = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<formData>();
+  } = useForm<formData>({ resolver: zodResolver(schema) });
   const onSubmit = (data: FieldValues) => {
     console.log(data);
   };
-  const intAge = 18;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-3">
@@ -22,30 +30,24 @@ const Form = () => {
           Name
         </label>
         <input
-          {...register("name", { required: true, minLength: 4 })}
+          {...register("name")}
           id="name"
           type="text"
           className="form-control"
         />
-        {errors.name?.type === "required" && (
-          <p className="text-danger">Name field is required***</p>
-        )}
-        {errors.name?.type === "minLength" && (
-          <p className="text-danger">
-            Name should be atleast 4 characters long
-          </p>
-        )}
+        {errors.name && <p className="text-danger">{errors.name.message}</p>}
       </div>
       <div className="mb-3">
         <label htmlFor="age" className="form-label">
           Age
         </label>
         <input
-          {...register("age")}
+          {...register("age", { valueAsNumber: true })}
           id="age"
           type="number"
           className="form-control"
         />
+        {errors.age && <p className="text-danger">{errors.age.message}</p>}
       </div>
       <button disabled={!isValid} className="btn btn-primary">
         Submit
@@ -55,6 +57,16 @@ const Form = () => {
 };
 
 export default Form;
+
+// interface formData {
+//   name: string;
+//   age: number;
+// }
+// {errors.name?.type === "minLength" && (
+//   <p className="text-danger">
+//     Name should be atleast 4 characters long
+//   </p>
+// )}
 
 // interface props {
 //   person?: string;
