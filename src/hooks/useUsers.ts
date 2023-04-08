@@ -5,7 +5,6 @@ import userService, { User } from "../Components/Services/userService";
 const useUsers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-
   const [err, setErr] = useState("");
 
   useEffect(() => {
