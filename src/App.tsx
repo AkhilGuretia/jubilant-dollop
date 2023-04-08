@@ -8,8 +8,8 @@ import NavBar from "./Components/NavBar";
 import ExpandableText from "./Components/ExpandableText";
 import Form from "./Components/Form";
 import "./index.css";
-import ProductList from "./Components/ProductList";
-import axios from "axios";
+import Backend from "./Components/BackendConnect/Backend";
+
 function App() {
   let items = [
     "Mumbai",
@@ -20,42 +20,13 @@ function App() {
     "Chandigarh",
   ];
 
-  interface User {
-    id: number;
-    name: string;
-  }
-  const [users, setUsers] = useState<User[]>([]);
-  const [name, setName] = useState("");
   const [cartItems, setcartItems] = useState(["Product1", "Product2"]); // sharing states b/w components (NavBar and Cart)
   const handleSelectItem = (item: string) => console.log(item);
   const [alertVisible, setAlertVisibility] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/users")
-      .then((res) => setUsers(res.data));
-  }, []);
   return (
     <div>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
-      <label htmlFor="Choose Name" className="for-label">
-        Choose Name
-      </label>
-      <select
-        id="Choose Name"
-        className="form-select"
-        onChange={(event) => setName(event.target.value)}
-      >
-        <option value=""></option>
-        <option value="French Montana">French montana</option>
-        <option value="Posty's Universe">Posty's universe</option>
-        <option value="Cardi B">Cardi B</option>
-      </select>
-      <ProductList effectHookDemo={name} />
+      <Backend />
       <Form></Form>
       <p></p>
       <div>
